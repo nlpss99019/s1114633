@@ -46,6 +46,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.s1114633.ui.theme.S1114633Theme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+
+import androidx.compose.foundation.layout.Column
+
+import androidx.compose.material3.Button
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+
 
 
 class MainActivity : ComponentActivity() {
@@ -72,9 +83,20 @@ fun FirstScreen(navController: NavHostController) {
         .background(Color.White),
     )
     {
-        Text(text = "簡介",
+        Text(text = "瑪利亞基金會服務總覽",
             fontSize = 15.sp,
             color = Color.Blue)
+        Image(
+            painter = painterResource(id = R.drawable.service),
+            contentDescription = "圖片",
+            alpha = 0.7f,
+            modifier = Modifier
+        )
+        Button(onClick = {
+            navController.navigate("JumpSecond")
+        }) {
+            Text(text = "作者：資管二B王梓芸")
+        }
     }
 }
 @Composable
@@ -84,10 +106,21 @@ fun SecondScreen(navController: NavHostController) {
         .background(Color.White),
     ) {
 
-        Text(text = "主要機構",
+        Text(text = "APP作者",
             fontSize = 15.sp,
-            color = Color.Red
+            color = Color.Blue
         )
+        Image(
+            painter = painterResource(id = R.drawable.a),
+            contentDescription = "圖片",
+            alpha = 0.7f,
+            modifier = Modifier
+        )
+        Button(onClick = {
+            navController.navigate("JumpFirst")
+        }) {
+            Text(text = "服務總覽")
+        }
     }
 }
 
@@ -99,11 +132,7 @@ fun Main() {
 
     Column{
         TopAppBar(
-            title = { Image(
-                painter = painterResource(id = R.drawable.maria),
-                contentDescription = "圖片",
-                alpha = 0.7f,
-            ) },
+            title = { Text(text = "頁面轉換實例") },
 
             actions = {
                 IconButton(
@@ -115,19 +144,17 @@ fun Main() {
                     expanded = showMenu, onDismissRequest = { showMenu = false }
                 ) {
                     DropdownMenuItem(
-                        text = { Text("簡介") },
+                        text = { Text("服務總覽") },
                         onClick = { navController.navigate("JumpFirst")})
 
                     DropdownMenuItem(
-                        text = { Text("主要機構") },
+                        text = { Text("作者：資管二Bxxx") },
                         onClick = { navController.navigate("JumpSecond")})
                 }
 
 
             }
         )
-
-
         NavHost(navController = navController, startDestination = "JumpFirst") {
             composable("JumpFirst") {
                 FirstScreen(navController = navController)
@@ -139,6 +166,12 @@ fun Main() {
         }
     }
 }
+
+
+
+
+
+
 
 
 
